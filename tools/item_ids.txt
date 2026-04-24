@@ -1,0 +1,1425 @@
+0 Airtight Flask
+1 Scrag of Beast
+2 Beast-Steak
+3 Ambrosial Meat
+4 Sour Scrag of Beast
+5 Sour Beast-Steak
+6 Sour Ambrosial Meat
+7 Rotten Scrag of Beast
+8 Rotten Beast-Steak
+9 Rotten Ambrosial Meat
+10 Small Fish
+11 Large Fish
+12 Giant Fish
+13 Small Rank Fish
+14 Large Rank Fish
+15 Giant Rank Fish
+16 Small Rotten Fish
+17 Large Rotten Fish
+18 Giant Rotten Fish
+19 Berry
+20 Apple
+21 Grandgrapes
+22 Moldy Berry
+23 Moldy Apple
+24 Moldy Grandgrapes
+25 Rotten Berry
+26 Rotten Apple
+27 Rotten Grandgrapes
+28 Twigbean
+29 Carrot
+30 Pumpkin
+31 Moldy Twigbean
+32 Moldy Carrot
+33 Moldy Pumpkin
+34 Rotten Twigbean
+35 Rotten Carrot
+36 Rotten Pumpkin
+37 Egg
+38 Golden Egg
+39 Rotten Egg
+40 Sunbright
+41 Moonglow
+42 Wilted Blossom
+43 Greenwarish
+44 Potent Greenwarish
+45 Mushroom
+46 Large Mushroom
+47 Avernal Mushroom
+48 Mithridates
+49 Bringbout
+50 Small Nut
+51 Large Nut
+52 Copper Ore
+53 Silver Ore
+54 Gold Ore
+55 Ore fuligin
+56 Hemp
+57 Wool-Cloth
+58 Silk
+59 Argence
+60 Pine Branch
+61 Cedar Branch
+62 Chestnut Branch
+63 Beech Branch
+64 Lantern
+65 Lantern (Half-Full)
+66 Ferrystone
+67 Empty Flask
+68 Flask of Water
+69 Flask of Oil
+70 Kindling
+71 Torch
+72 Ceramic Jug
+73 Rock
+74 Skull
+75 Pickaxe
+76 Lantern (No Fuel)
+77 Sturdy Pickaxe
+78 Irrefrangible Pickaxe
+79 Throwblast
+80 Dragons Spit
+81 Charcoal
+82 Smother Sap
+83 Harspud Milk
+84 Harspud Juice
+85 Harspud Sauce
+86 Interventive
+87 Spicy Mushroom Tea
+88 Light-Cure
+89 Twinge Eel treacle
+90 Panacea
+91 White Wine
+92 Red Wine
+93 Poison Flask
+94 Absorbent Rag
+95 Clean Cloth
+97 Secret Softener
+98 Liquid Vim
+99 Salubrious Brew
+100 Bottled Haste
+101 Eyedropper
+102 Throat Drops
+104 Placative Brew
+105 Liberating Brew
+106 Purifying Brew
+108 Dose of Strength
+109 Dose of Courage
+110 Warlocks Draught
+111 Clerics Draught
+112 Conquerors Periapt
+113 Angels Periapt
+114 Demons Periapt
+115 Mages Periapt
+116 Monks Periapt
+117 Veterans Periapt
+118 Bankers Periapt
+119 Isometricine
+120 Foreign Knife
+130 Wooden Arrow
+131 Poison Arrow
+132 Blinder Arrow
+133 Silencer Arrow
+134 Sleeper Arrow
+135 Oil Arrow
+137 Petrifying Arrow
+139 Blast Arrow
+140 Makers Finger
+141 Soldiers Uniform
+142 First Key To Salvation
+143 Second Key To Salvation
+144 First Gem of Salvation
+145 Second Gem of Salvation
+146 Third Gem of Salvation
+147 Fourth Gem of Salvation
+148 Watergods Altar Key
+149 Quarry Key
+150 Portcrystal
+151 Wakestone
+152 Wyrm Hunt License
+153 Gardeners Permit
+154 Ancient Slate
+155 Wakestone Shard
+156 Petition
+157 Red Maidenswear
+158 Incriminating Contract
+159 Blue Maidenswear
+160 Yellow Maidenswear
+161 Travelers Journal
+162 Salomets Grimoire
+163 Confidential Letter
+164 Parcel
+165 Green Maidenswear
+166 Altar Slate
+167 Mauls Badge Of Amity
+168 Ophiss Badge Of Amity
+169 Maidservants History
+170 Gold Idol
+171 Blessed Flower
+172 Dead Flower
+173 Ancient Tablet
+174 Fifth Gem of Salvation
+175 Freight
+176 Windbluff Tower Key
+177 Arisens Bond
+178 Prisoners Drabs
+179 Watergods Altar Lever
+180 Shadow Fort Lever
+181 Wyrmward Perfume
+182 Goodfishers Clothes
+183 Salvation Habit
+184 Seekers Token
+185 Badge of Vows
+186 Celestial History
+187 Engraved Lever
+188 Affidavit of Innocence
+189 Affidavit of Guilt
+190 First Journal Entry
+191 Second Journal Entry
+192 Third Journal Entry
+193 Fourth Journal Entry
+194 Fifth Journal Entry
+195 Final Journal Entry
+196 Unsigned Letter
+197 Tightly Folded Letter
+198 Silver Idol
+199 Bronze Idol
+200 Resolve
+201 Promise
+202 Freight
+203 Coin Purse of Charity
+204 Scriptures
+205 Promissory Note
+206 Antique Panoply
+207 Matured Greenwarish
+208 Pretty Stone
+209 Champions Writ
+210 Wardens Writ
+211 Archmages Writ
+212 Whats Note
+213 Pilgrims Charm
+214 Unbowed Tree
+215 Eager Fang
+216 Gran Soren Uniform
+217 Strongwarish
+218 Badge of Merit
+219 Rift Crystal
+221 Salvations Badge
+222 Manse Key
+223 Skeleton Key
+224 Love-In-The-Rough
+225 Neer-Do-Part
+226 Petition of Guilt
+229 Wyrmkings Ring
+230 Kept Scrag of Beast
+231 Kept Beast-Steak
+232 Kept Ambrosial Meat
+233 Kept Sour Scrag of Beast
+234 Kept Sour Beast-Steak
+235 Kept Sour Ambrosial Meat
+236 Kept Rotten Scrag of Beast
+237 Kept Rotten Beast-Steak
+238 Kept Rotten Ambrosial Meat
+239 Kept Small Fish
+240 Kept Large Fish
+241 Kept Giant Fish
+242 Kept Small Rank Fish
+243 Kept Large Rank Fish
+244 Kept Giant Rank Fish
+245 Kept Small Rotten Fish
+246 Kept Large Rotten Fish
+247 Kept Giant Rotten Fish
+248 Kept Berry
+249 Kept Apple
+250 Kept Grandgrapes
+251 Kept Moldy Berry
+252 Kept Moldy Apple
+253 Kept Moldy Grandgrapes
+254 Kept Rotten Berry
+255 Kept Rotten Apple
+256 Kept Rotten Grandgrapes
+257 Kept Twigbean
+258 Kept Carrot
+259 Kept Pumpkin
+260 Kept Moldy Twigbean
+261 Kept Moldy Carrot
+262 Kept Moldy Pumpkin
+263 Kept Rotten Twigbean
+264 Kept Rotten Carrot
+265 Kept Rotten Pumpkin
+266 Kept Egg
+267 Kept Golden Egg
+268 Kept Rotten Egg
+269 Kept Sunbright
+270 Kept Moonglow
+271 Kept Wilted Blossom
+272 Ferrystone
+273 Makers Finger
+274 Portcrystal
+275 Wakestone
+276 Wakestone Shard
+277 Wyrmward Perfume
+278 Salomets Grimoire Forgery
+279 Gold Idol Forgery
+280 Silver Idol Forgery
+281 Bronze Idol Forgery
+282 Wyrmkings Ring Forgery
+283 Rift Fragment
+284 Rift Cluster
+285 Dragons Gaze
+286 Confidential Letter Forgery
+301 Iron Sword
+302 Cutlass
+303 Silver Rapier
+304 Golden Rapier
+305 Aneled Rapier
+306 Broadsword
+307 Trusty Sword
+308 Undulant Sword
+309 Undulant Gold
+310 Undulant Black
+311 Crossed Clinquedea
+312 Dragons Dogma
+313 Bastard Sword
+314 Golden Bastard
+315 Aneled Bastard
+316 Carnation
+317 Tight Cinquedea
+318 Ashkelon
+319 Wounded Fury
+320 Force Hatchet
+321 Rusted Sword
+322 Mace
+323 Thousand Troops
+324 Obliteratrix
+325 Golden Obliteratrix
+326 Aneled Obliteratrix
+327 Steel Beak
+328 Beak of Gold
+329 Aneled Beak
+330 Threaded Cudgel
+331 Dragons Toll
+332 Morgenstern
+333 Bloodthirsty Beak
+334 Thousand Stings
+335 Golden Stings
+336 Aneled Stings
+337 Ingot Club
+338 Totem Mace
+339 Dragons Presence
+340 Sickening Skull
+341 Royal Alms
+342 Rusted Mace
+343 Two-Hander
+344 Steel Greatsword
+345 Life Taker
+346 Soultaker
+347 Soulbreaker
+348 War Blade
+349 Flamberge
+350 Cassardi Flamberge
+351 Saving Grace
+352 Dwells-In-Light
+353 Dragons Bite
+354 Lancers Sword
+355 Golden Lance
+356 Aneled Lance
+357 Gryphic Victory
+358 Gryphic Gold
+359 Gryphic Black
+360 Wounded Heart
+361 Dragons Flight
+362 Iraklis
+363 Rusted Greatsword
+364 Judgment
+365 Mounted Pale
+366 Golden Pale
+367 Aneled Pale
+368 Cyclops Stealth
+369 Golden Cyclops Stealth
+370 Aneled Cyclops Stealth
+371 Triple Tooth
+372 Teeth of Gold
+373 Aneled Tooth
+374 Ferric Talon
+375 Bloody Thistle
+376 Steel Urchin
+377 Angels Fist
+378 Dragons Repast
+379 Black Matter
+380 Chestcaver
+382 Cyclops Bane
+383 Stamina Hammer
+384 Rusted Warhammer
+385 Throatcutters
+386 Signs of Valor
+387 Crimson Teeth
+388 Bardiche Daggers
+389 Golden Bardiches
+390 Aneled Bardiches
+391 Vouge Daggers
+392 Divine Razors
+393 Stilettos
+394 Golden Stilettos
+395 Aneled Stilettos
+396 Criteria
+397 Dragons Vein
+398 Dragons Pain
+399 Snagdaggers
+400 Snags of Gold
+401 Aneled Snags
+403 Saurian Bane
+404 Dowsing Spikes
+405 Rusted Daggers
+406 Wooden Staff
+407 Favored Flower
+408 White Steering
+409 Unfettered Claw
+410 Golden Claw
+411 Aneled Claw
+412 Cast Stone
+413 Dragons We
+414 Ironclad Staff
+415 Unspoken Grace
+416 Golden Grace
+417 Aneled Grace
+418 Anchor To Heaven
+419 Path To Heaven
+420 Gleam Of Heaven
+421 Favored Canopy
+422 Frigid Finger
+424 Goblin Bane
+425 Legions Might
+426 Rusted Staff
+427 Common Archistaff
+428 Favored Branches
+429 Talarian White
+430 Plucked Heart
+431 Solar Providence
+432 Eclipsed Providence
+433 Dragons Wit
+434 Keen Dragons Wit
+435 Grievous Horns
+436 Grievous Gold
+437 Grevious Black
+438 Meniscus
+439 Golden Meniscus
+440 Aneled Meniscus
+441 Helical Archistaff
+442 Solar power
+443 Dragons Risen
+445 Evil Eyesight
+446 Caged Fury
+447 Rusted Archistaff
+448 Edens Warden
+449 Caladbolg
+450 Storag
+451 Crescending Roar
+452 Font of Fire
+453 Malignance
+454 Ardent Will
+455 Fiery Talon
+456 Rooted Gloom
+457 Crimson Glare
+458 Thunderclap
+459 Divine Axis
+460 Algid Bloom
+461 Iron Shield
+462 Pelt
+463 Round Shield
+464 Gran Korean Shield
+465 Mark of the Chimera
+466 Orilux Shield
+467 Lustrous Targe
+468 Sable Sentinel
+469 Dragons Aegis
+470 Feather-Light Pelt
+471 Scarred Sentinel
+472 Dragons Den
+473 Hell Fang
+474 Brutish Wall
+475 Rusted Shield
+476 Wooden Wall
+477 Magick Buckler
+478 Fine Magick Bucklers
+479 Lustrous Greatshield
+480 Blood Kite Shield
+481 Wizards Vizard
+482 Knights Honor
+483 Angels Sanctum
+484 Dark Buckler
+485 Dragons Faith
+488 Zombiebane
+489 Brilliance
+490 Rusted Magick Shield
+491 Shortbow
+492 Direwolf Bow
+493 Sylvan Bow
+494 Fluted Bow
+495 Dragons Rancor
+496 Hunters Bow
+497 Pleached Limbs
+498 Fey Whisper
+500 Stalwart Bow
+502 Griffinbane
+503 Repeller Bow
+504 Rusted Bow
+505 Plain Longbow
+506 Reinforced Longbow
+507 Bespoke Longbow
+508 Noble Limbs
+509 Veterans Arc
+510 Dragons Blink
+511 Savage Fang
+517 Hydra Husk
+518 Bezel Crown
+519 Rusted Longbow
+520 Gimble Gyre
+521 Terminal Gyre
+522 Heralds Helix
+523 Masters Merle
+524 Dragons Breath
+525 Dragons Quickening
+526 Magic Crutch
+527 Metered Catharsis
+528 Militant Dove
+529 Rusted Spellbow
+530 Leather Quiver
+531 Seekers Quiver
+532 Horn Quiver
+533 Solid Quiver
+534 Safety Quiver
+535 Glistering Quiver
+538 Scorched Pelt
+539 Lament Shield
+540 Thunder Kite Shield
+541 Scalding Razors
+542 Kunai
+543 Galvanic Razors
+544 Chilling Razors
+545 Heavens Key
+546 Frozen Tomorrow
+547 Stagnant Surge
+548 Thousandlimbs
+549 White Hawks Talon
+551 Plebian Shirt
+552 Plebian Trousers
+553 Faded Vest
+554 Travelers Shirt
+555 Tunic
+556 Bandages
+557 Cassardi Shift
+558 Fine Cassardi Shirt
+559 Hemp Shirt
+560 Leather Chestguard
+561 Shirt & Leather Bands
+562 Linen Shirt
+563 Riveted Coat
+564 Assembled Vest
+565 Quilted Jerkin
+566 Cotton Tunic
+567 Ladys Corset
+568 Chain Mail
+569 Braided Shirt
+570 Bracers chainmail
+571 Bliaut
+572 Light Outfit
+573 Iron Vest
+574 Blessed Vest
+575 Brigandine Jerkin
+576 Hard Leather Plate
+577 Trooper Outfit
+578 Bracers chainmail
+579 Maidens Camisole
+580 Alchemickal Coat
+581 Silver Vest
+582 Silver Chestplate
+583 Forest Tunic
+584 Alchemick Vest
+585 Plated Coat
+586 Hunters Shirt
+587 Gambeson
+588 Doublet
+589 Noblewomans Corset
+590 Dragonleather Vest
+591 Dragonskin
+592 Abyssinal Outfit
+593 Crimson Jerkin
+594 Silver Cuirass
+595 Marshals Bracers
+596 Swordsmans Shirt
+597 White Hawk Tunic
+601 Illusory Broadsword
+602 Illusory Mark of the Chimera
+603 Illusory Brigandine Jerkin
+604 Illusory Laborers Breeches
+605 Illusory Divine Surcoat
+606 Illusory Shadow Gauntlets
+607 Illusory Shadow Greaves
+608 Illusory Tattered Mantle
+609 Illusory Crossed Cinquedea
+610 Illusory Scarred Sentinel
+611 Illusory Plated Coat
+612 Illusory Laborers Breeches
+613 Illusory Clerical Cap
+614 Illusory Grand Surcoat
+615 Illusory Steel Gauntlets
+616 Illusory Steel Sabatons
+617 Illusory Vouge Daggers
+618 Illusory Shortbow
+619 Illusory Quiver
+620 Illusory Chainmail bracers
+621 Illusory Translucent Hosen
+622 Illusory Chestguard
+623 Illusory Bandits Glove
+624 Illusory Chainmail Skirt
+625 Illusory Ironclad Staff
+626 Illusory Forest Tunic
+627 Illusory Fine Cassardi Hosen
+628 Illusory Wizards Helm
+629 Illusory Missionary痴 Robe
+630 Illusory Runic Bangles
+631 Illusory Leather Shoes
+632 Short Pants
+633 Travelers Tights
+634 Cotton Hose
+635 Leather Bandings
+636 Cassardi Trousers
+637 Fine Cassardi pants
+638 Cloth Short Pants
+639 Hemp Pants
+640 Workers Pants
+641 Yellow Gaiters
+642 Half Chain Hosen
+643 Laced Leggings
+644 Brown Leathers
+645 Evening Tights
+646 Bandit Stalkers
+647 Urban Hose
+648 Twisted Leathers
+649 Seeker Tights
+687 Laborers Breeches
+688 White Stockings
+689 Full Chain Hosen
+690 Black Gaiters
+691 Huntsmans Trousers
+692 Braided pants
+693 Brown Laced Leggings
+694 Iron Bandings
+695 Silver Pants
+696 Alchemickal pants
+697 Denim Pants
+698 Silk Lingerie
+699 Swordsmans Pants
+700 White Hawk Leggings
+715 Leather Cap
+716 Circlet
+717 Leather Hood
+718 Chain Coif
+719 Faerie Hood
+720 Bronze Sallet
+721 Feather Hood
+722 Verdant Hood
+723 White Cap
+724 Truants Mask
+725 Horned Helm
+726 Cyclops Veil
+727 Red Leather Cap
+728 Red Leather Hood
+729 Dragon Band
+730 Wizards Helm
+731 Lupine Veil
+732 Incognito Mask
+733 Bandits Mask
+734 Barreled Helm
+735 Leather Circlet
+736 Iron Helm
+737 Gryphic Helm
+738 Assassins Mask
+739 Iron Headgear
+740 Twilight Hood
+741 Guardians Hood
+742 Gossips Mask
+743 Summery Cowl
+744 Chimeric Armet
+745 Lion-Lords Helm
+746 Crowned Hood
+747 Clerical Cap
+748 Meloirean Helm
+749 Steel Sallet
+750 Coupled Headgear
+751 Archwizards Helm
+752 Autumn Hood
+753 Laurel Circlet
+754 Meloirean Cyclops Veil
+755 Direwolf Veil
+756 Sultry Cowl
+757 Crimson Arms
+758 Grisly Skull
+759 Golden Lion Helm
+760 Dragon Knights Helm
+761 Sages Hood
+762 Barbarian Chiefs Helm
+763 Twilight Mask
+764 diadem
+765 Dragonroar
+766 Heros Hood
+767 Chaos Helm
+768 Emissary Hood
+769 Monomi Mask
+770 Ancient Circlet
+771 Heresy Hood
+772 Beowulf Mask
+773 Apollo Mask
+774 Siegfried Mask
+775 Saint George Mask
+776 Silver Eyeglasses
+777 Gold Eyeglasses
+778 Black Eyeglasses
+779 Red Eyeglasses
+780 Farewell Hood
+781 Wyrmfyre Vizard
+782 Dragonseye Band
+783 Dragonspulse Circlet
+784 White Hawk Sallet
+800 Cloth Shirt
+801 Skull Belts
+802 Leather Jacket
+803 Shabby Robe
+804 Bone Armor
+805 Bone Plate Armor
+806 Leather Belts
+807 Sectional Armor
+808 Chestguard
+809 Scholars Coat
+810 Healers Robe
+811 Bronze Cuirass
+812 Leather Waistwrap
+813 Mummers Wear
+814 Bronze Lorica
+815 Hide Armor
+816 Surco
+817 Hunters Jacket
+818 Red Leather Armor
+819 Archmages Robe
+820 Missionarys Robe
+821 Frame Plate
+822 Padded Armor
+823 Sectional Iron Plate
+824 Gryphic Armor
+825 Iron Lorica
+826 Weak Guard
+827 Magicians Surcoat
+828 Dalmatica
+829 Grand Surcoat
+830 Summery Pareo
+831 Recluses Robe
+832 Maidens Petticoat
+833 Flutter Padding
+834 Chimeric Half Plate
+835 Scale Coat
+836 Rex Lion Padding
+837 Sages Robe
+838 Animistic Dress
+839 Meloirean Plate
+840 Steel Cuirass
+841 Lamellar Jacket
+842 Cardinal Surcoat
+843 Royal Surcoat
+844 Divine Surcoat
+845 Golden Belt
+846 Sultry Pareo
+847 Crimson Robe
+848 Archers Panties
+849 Crimson Plate
+850 Grisly Bone Armor
+851 Golden Lion Padding
+852 Matte Robe
+853 Philosophers Robe
+854 Red Dragon Scale
+855 Dark Lorica
+856 Berserkin
+857 Heros Surcoat
+858 Chaos Armor
+859 Emissary Armor
+860 Monomi Coat
+861 Ancient Robe
+862 Heresy Armor
+863 Abyssinal Coat
+864 Solar Armor
+865 Asura Armor
+866 Leather Protector
+867 Swordsmans Plate
+868 White Hawk Half-Plate
+908 Wooden Bands
+909 Talismanic Beads
+910 Newss Bracers
+911 Funnybone Guards
+912 Bandits Glove
+913 Scholars Bangle
+914 Navy Leather Gloves
+915 Bronze Gauntlets
+916 Hand Covers
+917 Bronze Bangles
+918 Scale Armguard
+919 Assailants Bracers
+920 Iron Bracers
+921 Red Leather Glove
+922 Tiger Bangle
+923 Silver Bands
+924 Iron Armguard
+925 Gryphic Gauntlets
+926 Iron Manicae
+927 Assembled Sleeves
+928 Iron Rings
+929 Runic Bangles
+930 Leather Gloves
+931 Masters Bracers
+932 Chimeric Gauntlets
+933 Arm Crest
+934 Scarlet Hand Covers
+935 Jade Bangles
+936 Armguard Meloirean
+937 Steel Gauntlets
+938 Assassins Armguards
+939 Alchemickal Bangles
+940 Champions Bangles
+941 Black Leather Gloves
+942 Darkened Gloves
+943 Crimson Gauntlets
+944 Grisly Bracers
+945 Twilight Manicae
+946 Burnished Bracers
+947 Gleaming Bangles
+948 Golden Wristbands
+949 Dragonscale Arm
+950 Emissary Bracers
+951 Shadow Gauntlets
+952 Heros Gauntlets
+953 Chaos Gauntlets
+954 Monomi Bracers
+955 Ancient Bangles
+956 Heresy Armguards
+957 Abyssinal Bracers
+958 Farewell Gloves
+959 Gloves of Might
+960 Swordsmans Bracers
+961 White Hawk Gauntlets
+969 Plebian Trousers
+970 Budget Greaves
+971 Leather Thigh
+972 Leather Shoes
+973 Novice Breeches
+974 Cassardi Greaves
+975 Metal Greaves
+976 Fur Greaves
+977 Scholars Boots
+978 Iron Leg Guards
+979 Steel-Toed Boots
+980 Bronze Sabatons
+981 Fur & Thighs
+982 Riveted Boots
+983 Blue Longkilt
+984 Dusk Shoes
+985 Steel Sabatons
+986 Battle Greaves
+987 Downcuffs & Thighs
+988 Mages Shoes
+990 Over-Knee Boots
+991 Scale Greaves
+992 Iron Boots
+993 Iron Thighs
+994 Gryphic Greaves
+995 Chainmail Skirt
+996 Assembled Breeches
+997 Wizards Boots
+998 Red Longkilt
+999 Fine Over-Knee Boots
+1000 Raptor Thighs
+1001 Rose Ring
+1001 Gloaming Shoes
+1002 Iris Ring
+1002 Chimeric Sabatons
+1003 Violet Ring
+1003 Thick Fur Greaves
+1004 Assassins Breeches
+1005 Nimble legs
+1006 Red Over-Knee Boots
+1007 Meloirean Greaves
+1008 Leather Ocreae
+1009 Strikers Greaves
+1010 Royal Thighs
+1011 Purple Longkilt
+1012 Molten Boots
+1013 Dark Over-Knee Boots
+1014 Flame Skirt
+1015 Superior Thighs
+1016 Crimson Sabatons
+1017 Grisly Greaves
+1018 Carmine Breeches
+1019 Exotic High Boots
+1020 Shadow Greaves
+1021 Dragonbeards
+1022 Twilight Greaves
+1023 Holy Thighs
+1024 Holy Thighs
+1025 Heros legs
+1026 Chaos Greaves
+1027 Emissary Greaves
+1028 Monomi Greaves
+1029 Ancient Greaves
+1030 Heresy Greaves
+1031 Abyssinal Greaves
+1032 Swordsmans Greaves
+1033 White Hawk Thighs
+1036 White Hawk Cape
+1058 Leather Cape
+1059 Shed Cape
+1060 Shoulder Cape
+1061 Ebon Neck Wrap
+1062 Scholars Cape
+1063 Mahogany Cape
+1064 Direwolf Cape
+1065 Adventurer`s Cloak
+1066 Feather Cape
+1067 Knights Mantle
+1068 Harpy Cloak
+1069 Alchemickal Cloak
+1070 Violet Neck Wrap
+1071 Paladins Mantle
+1072 Gryphic Cloak
+1073 Scarlet Cape
+1074 Pauldron
+1075 Feral Cape
+1076 Royal Mantle
+1077 Dignified Cape
+1078 Dragon Knights Cloak
+1079 Ancient Cape
+1080 lordly Cloak
+1081 Heros Cape
+1082 Monomi Neck Wrap
+1083 heresy Cloak
+1084 Nebula Cape
+1085 Magnanimous Cloak
+1086 Farewell Cloak
+1087 Baleful Nails
+1088 Ogre Bone
+1089 Reinforced Nails
+1090 Barbed Nails
+1091 Ring of Gules
+1092 Ring of Azure
+1093 Ring of Purpure
+1094 Ring of Sable
+1095 Ring or Argent
+1096 Ring of Ruby
+1097 Ring of Sapphire
+1098 Ring of Amethyst
+1099 Ring of Pearl
+1100 Ring of Onyx
+1104 Lily Ring
+1105 Aeonium Ring
+1106 Cleansing Earring
+1107 Restless Earring
+1108 Nimble Earring
+1109 Free-Spoken Earring
+1110 Benevolent Earring
+1111 Sight Earring
+1112 Faithful Earring
+1113 Exuberant Earring
+1114 Stalwart Earring
+1115 Noble Earring
+1116 Haromnious Earring
+1117 Dignified Earring
+1118 Indomitable Earring
+1119 Dragonblood
+1120 Silver Ring
+1121 Golden Ring
+1122 Platinum Ring
+1123 Red Star Ring
+1124 Red Star Earring
+1125 Green Star Ring
+1126 Green Star Earring
+1127 Blue Star Ring
+1128 Blue Star Earring
+1129 Premium Ring
+1130 Premium Earring
+1131 Wyrm Hunt Mantle
+1132 Beastly Mantle
+1133 Conquerors Mantle
+1134 Tattered Mantle
+1135 Swordsmans Mantle
+1136 White Hawk Cape
+1181 Set of Servant`s Garb
+1182 Set of Dukes Clothing
+1183 Set of Salvation Robes
+1184 Set of Fishermans Garb
+1185 Set of Fishermans Tatters
+1186 Set of Royal Guard Armor
+1187 Set of Ladys Garb
+1191 Set of Prisoners Rags
+1192 Set of Jesters Motley
+1193 Nameless Armor Set
+1194 Captains Armor Set
+1201 Decorative Sword
+1202 Decorative Shield
+1203 Torturers Hammer
+1204 Royal Banner
+1205 Enlistment Corps Banner
+1206 War Bugle
+1207 Fishing Bob
+1208 Bucket
+1209 How
+1210 Spade
+1211 Scythe
+1212 Hammer
+1213 Trowel
+1214 Work Table
+1215 Quill
+1216 Wooden Board
+1217 Tray
+1218 Sconce
+1219 Blank Scroll
+1220 Broom
+1221 Ancient Scroll
+1222 Shackle
+1223 Large Coin Pouch
+1224 Coin Pouch
+1225 Small Coin Pouch
+1226 Giant Coin Pouch
+1227 Hunk of Ore
+1228 Goblin Horn
+1229 Wormwood Sap
+1230 Iron Blade Piece
+1231 Slate-Colored Horn
+1232 Curious Wine
+1233 Ebon Blade Piece
+1234 Night Terror痴 Horn
+1235 Blood Decanter
+1236 Small Fang
+1237 Wolf Pelt
+1238 Large Fang
+1239 Direwolf Pelt
+1240 Hellhound Fang
+1241 Hellhound Pelt
+1242 Ember Crystal
+1243 Saurian Scale
+1244 Poison Sac
+1245 Fisheye Stone
+1246 Saurian Tail
+1247 Striped Saurian Skin
+1248 Yellow Poison Sac
+1249 Incarnadine Scale
+1250 Inky Saurian Skin
+1251 Acid Sac
+1252 Snowy Saurian Skin
+1253 Argentina Bag
+1254 Purpure Crystal
+1255 Harpy Opinion
+1256 Harpy Rectrix
+1257 Elongated Claw
+1258 Glacial Pinion
+1259 Glacial Rectrix
+1260 Spurious Wing
+1261 Sinistone
+1262 Petrifactor
+1263 Bastard Wing
+1264 Shroud
+1265 Putrid Gold Tooth
+1266 Necrophagous Loin
+1267 Rusted Plate
+1268 Aged Insignia
+1269 Hex Runes
+1270 Brawn Runes
+1271 Miasmite Shard
+1272 Miasmite
+1273 Eldricite Shard
+1274 Eldricite
+1275 Astracite Shard
+1276 Astracite
+1277 Black Crystal
+1278 Immortal
+1279 Vengeful Mirror
+1280 Wailing Crystal
+1281 Craft Bone
+1282 Scrap Iron
+1283 Hard Bone
+1284 Dark Peridot
+1285 Fell-Lords Bone
+1286 Lordly Emblem
+1287 Mandrake
+1288 Torn Grimoire Preface
+1289 Torn Grimoire Appendix
+1290 Agate
+1291 Forgotten Arcanum
+1292 Pigeons Blood
+1293 Rugged Bone
+1294 Rugged Tusk
+1295 Misshapen Eye
+1296 Ogre Spur
+1297 Ogre Tooth
+1298 Unspeakable Meat
+1299 Dappled Ore
+1300 Magick Medal
+1301 Hunk of Gold Ore
+1302 ELECTRUM
+1303 Griffin Pinion
+1304 Great Griffin Claw
+1305 Slick Black Pinion
+1306 Cockatrice Beak
+1307 Hydras Lifeblood
+1308 Poison Hydra Fang
+1309 Black Hydra Scale
+1310 White Hydra Scale
+1311 Hydra Gallstone
+1312 Freakish Claw
+1313 Freakish Mane
+1314 Freakish Scale
+1315 Black Freakish Claw
+1316 Black Freakish Mane
+1317 Black Freakish Horn
+1318 Black Freakish Scale
+1319 Malecryst
+1320 Evil Eyeball
+1321 Malecryst Shard
+1322 Dragon Scale
+1323 Crimson Dragon Scale
+1324 Putrid Dragon Scale
+1325 Great Dragon Horn
+1326 Great Dragon Alula
+1327 Great Dragon Claw
+1328 Great Dragon Fang
+1329 Indurated Dragonsblood
+1330 Dragon Horn
+1331 Dragon Claw
+1332 Azure Dragon Scale
+1333 Amber Dragon Scale
+1334 Virid Dragon Scale
+1335 Rabbit Pelt
+1336 Snakeskin
+1337 Spider Venom
+1339 Desiccated Herbs
+1340 Stone Moss poultice
+1341 Foreign Medicament
+1342 Pickled Mushrooms
+1343 Backfat Oil
+1344 Staminal Drench
+1345 Crimson Concoction
+1346 Cerulean Concoction
+1347 Verdigris concoction
+1348 Violet Concoction
+1349 Balmy Perfume
+1350 Balmy Incense
+1351 Rousing Perfume
+1352 Rousing Incense
+1353 But Herb
+1354 Select Herb Ale
+1355 Distilled Herb Ale
+1356 Secret Herb Ale
+1357 Finest Herb Ale
+1358 Fragrant Herb Ale
+1359 Perfect Herb Ale
+1360 Detoxicating Powder
+1361 Oak Leaf Oil
+1362 Vigilite
+1363 Throat Remedy
+1364 Peppermint Seed
+1365 Nostalgia Dust
+1366 Drop of Deliverance
+1367 Frozen Holy Water
+1368 Cockatrice Liquor
+1369 Font of Vigor
+1370 Font of Constitution
+1371 Tagiluss Miracle
+1372 Steel Nut Salve
+1373 Salomets Secret
+1374 Decoction of Bandlily
+1375 Mushroom Soup
+1376 Sobering Wine
+1377 Martyrs Talisman
+1378 Golden Talisman
+1379 Mages Talisman
+1380 Iridescent Talisman
+1381 Vigor Extract
+1382 Serenity Extract
+1383 Silverwheat Paste
+1384 Goldbean Grind
+1385 Leaden Globe
+1386 Headless Icon
+1387 Warlocks Incense
+1388 Clerics Incense
+1389 Goddess Cameo
+1390 Wroth Mask
+1391 Decaying Grimoire
+1392 The Sundering Spear Tome
+1393 Fulgurous Lord Tome
+1394 Winters Path Tome
+1395 Jewel of Silence
+1396 Jewel of Darkness
+1397 Jewel of Time
+1398 Jewel of Health
+1399 Jewel of Endurance
+1400 Jewel of Petrifaction
+1401 Jewel of Toxicity
+1402 Jewel of Sleep
+1403 Jewel of Vicissitude
+1405 Sweet Pollen
+1406 Cloudwine
+1407 Shadowcap
+1408 Unremarkable Ore
+1409 White Sage
+1410 Sand-Layer Ore
+1411 Stagnant Shroom
+1412 Purple Anise
+1413 Firefly Stone
+1414 Capeflower
+1415 King Bay Leaf
+1416 Cassardite
+1417 Lava Flower
+1418 Catacomb Gold
+1419 Flammica
+1421 Imperial Acid
+1427 Copperstone
+1428 Godsthrone Blossom
+1429 Lodestone
+1430 Reminishroom
+1431 Destiny Grass
+1432 Devilwort
+1433 Fiends Perch
+1434 Grandblossom
+1438 Gloamcap
+1439 Cragwort
+1440 Burst-Rock
+1441 Windmill Flower
+1442 Scarlet Angelica
+1443 Nightcry
+1444 Waterfell Gentian Root
+1445 Waterfell Gentian Leaf
+1446 Polar Mushroom
+1454 Alluvial Yore-Ore
+1455 Leaf Leaf
+1456 Shiverberry
+1457 Southron Iron
+1458 Southron Oregano
+1459 Thornflower
+1460 Chaffstem
+1461 Nurse Log Sap
+1463 Gransys Herb
+1464 Toadstool Sitter
+1465 Spiny Nut
+1466 Loneflower
+1467 Anathema Grass
+1473 Wintry Herb
+1474 White Orchid
+1475 Sorrowstone
+1476 Jasper Blossom
+1479 Ancient Ore
+1480 Droughtshroom
+1481 Cursed Carving
+1482 Snakeskin Purse
+1483 Priceless Artifact
+1484 Brick
+1485 Pie Festival
+1486 Gran Soren Rubble
+1487 Noonflower
+1489 Tuft of Hair
+1490 Spring Water
+1501 Simons Petition
+1502 Fedels Petition
+1503 Geffreys Petition
+1504 Jaspers Condemnation
+1505 Saras Condemnation
+1506 Pips Condemnation
+1507 Soiled Affidavit
+1508 Tattered Affidavit
+1509 Sweat-Stained Affidavit
+1510 Blurred Affidavit
+1511 Chamberlains Affidavit
+1512 Diry Affidavit
+1513 Moldy Affidavit
+1514 Worn Affidavit
+1515 Ripped Affidavit
+1516 Gift Ledger
+1517 Drakes Tear
+1518 Wyrms Tear
+1519 Wyverns Tear
+1520 Scathers Elixir
+1521 Medicants Elixir
+1522 Mitigators Elixir
+1523 Challengers Elixir
+1524 Utilitarians Elixir
+1525 Guardians Elixir
+1526 Nexuss Elixir
+1527 Pioneers Elixir
+1528 Acquisitors Elixir
+1529 Neutralizing Elixir
+1530 Hobogoblin Tactics
+1531 Goblin Strategies
+1532 Wolf Strategy Vol. I
+1533 Wolf Strategy Vol. 2
+1534 Wolf Strategy VOl. 3
+1535 Skeleton Knight Tactics
+1536 Skeleton Strategies
+1537 Saurian Tactics Vol. I
+1538 Saurian Tactics Vol. 2
+1539 Saurian Strategy Vol. I
+1540 Saurian Strategy Vol. 2
+1541 Saurian Strategy Vol. 2
+1542 Undead Tactics Vol. I
+1543 Undead Tactics Vol. 2
+1544 Undead Strategy Vol. I
+1545 Undead Strategy Vol. 2
+1546 Harpy Strategies
+1547 Ghost Tactics Vol. I
+1548 Ghost Tactics Vol. 2
+1549 Ghost Strategies
+1550 Ogre Strategy Vol. I
+1551 Ogre Strategy Vol. 2
+1552 Cyclops Tactics
+1553 Cyclops Strategy Vol. I
+1554 Cyclops Strategy Vol. 2
+1555 Golem Tactics
+1556 Golem Strategy Vol. I
+1557 Golem Strategy Vol. 2
+1558 Chimera Tactics
+1559 Chimera Strategy Vol. I
+1560 Chimera Strategy Vol. 2
+1561 Hydra Tactics
+1562 Hydra Strategy Vol. I
+1563 Hydra Strategy Vol. 2
+1564 Griffin Strategy Vol. I
+1565 Griffin Strategy Vol. 2
+1566 Griffin Strategy Vol. 3
+1567 Cockatrice Strategy Vol. I
+1568 Cockatrice Strategy Vol. 2
+1569 Evil Eye Strategy Vol. I
+1570 Evil Eye Strategy Vol. 2
+1571 Vile Eye Strategy Vol. I
+1572 Vile Eye Strategy Vol. 2
+1573 Wight Tactics
+1574 Lich Tactics
+1575 Draconian Strategy Vol. I
+1576 Draconian Strategy Vol. 2
+1577 Badge of Vows 34
+1578 Badge of Vows 51
+1579 Badge of Vows 77
+1580 Badge of Vows 33
+1581 Badge of Vows 69
+1582 Badge of Vows 81
+1583 Badge of Vows 82
+1584 Badge of Vows 83
+1585 Badge of Vows 84
+1586 Badge of Vows 85
+1587 Badge of Vows 86
+1588 Badge of Vows 1
+1589 Badge of Vows 2
+1590 Badge of Vows 3
+1591 Badge of Vows 70
+1592 Badge of Vows 4
+1593 Badge of Vows II
+1594 Badge of Vows 22
+1595 Badge of Vows 31
+1596 Badge of Vows 12
+1597 Badge of Vows 32
+1598 Badge of Vows 5
+1599 Badge of Vows 62
+1600 Badge of Vows 14
+1601 Badge of Vows 92
+1602 Badge of Vows 15
+1603 Badge of Vows 6
+1604 Badge of Vows 9
+1605 Badge of Vows 38
+1606 Badge of Vows 37
+1607 Badge of Vows 63
+1608 Badge of Vows 66
+1609 Badge of Vows 61
+1610 Badge of Vows 67
+1611 Badge of Vows 94
+1612 Badge of Vows 8
+1613 Vermillion Face Pigment
+1614 Gold Face Pigment
+1615 Bright Green Face Pigment
+1616 Turquoise Face Pigment
+1617 Blue Face Pigment
+1618 Lavender Face Pigment
+1619 White Face Pigment
+1620 Red Hair Dye
+1621 Pink Hair Dye
+1622 Sky Blue Dye
+1623 Cornflower Blue Hair Dye
+1624 Pine Green Hair Dye
+1625 Bright Green Hair Dye
+1626 Yellow Hair Dye
+1627 Red Skin Pigment
+1628 Yellow Skin Pigment
+1629 Green Skin Pigment
+1630 Blue Skin Pigment
+1631 Plum SKin Pigment
+1632 Ash Gray Skin Pigment
+1633 Ivory Skin Pigment
+1634 Art of Metamorphosis
+1635 Secret of Metamorphosis
+1636 Badge of Vows 95
+1637 Badge of Vows 96
+1638 Badge of Vows 68
+1639 Badge of Vows 65
+1640 Badge of Vows 72
+1641 Badge of Vows 93
+1642 Badge of Vows 73
+1643 Badge of Vows 100
+1644 Badge of Vows 98
+1645 Badge of Vows 79
+1646 Badge of Vows 74
+1647 Badge of Vows 27
+1648 Badge of Vows 71
+1649 Badge of Vows 7
+1650 Badge of Vows 21
+1651 Badge of Vows 44
+1652 Badge of Vows 43
+1653 Badge of Vows 47
+1654 Badge of Vows 45
+1655 Badge of Vows 46
+1656 Badge of Vows 42
+1657 Badge of Vows 49
+1658 Badge of Vows 41
+1659 Badge of Vows 48
+1660 Badge of Vows 50
+1661 Badge of Vows 75
+1662 Badge of Vows 23
+1663 Badge of Vows 54
+1664 Badge of Vows 19
+1665 Badge of Vows 88
+1666 Badge of Vows 89
+1667 Badge of Vows 16
+1668 Badge of Vows 52
+1669 Badge of Vows 28
+1670 Badge of Vows 29
+1671 Badge of Vows 80
+1672 Badge of Vows 58
+1673 Badge of Vows 35
+1674 Badge of Vows 40
+1675 Badge of Vows 39
+1676 Badge of Vows 87
+1677 Badge of vows 56
+1678 Badge of Vows 55
+1679 Badge of Vows 17
+1680 Badge of Vows 30
+1681 Badge of Vows 64
+1682 Badge of Vows 60
+1683 Badge of Vows 97
+1684 Badge of Vows 20
+1685 Badge of Vows 13
+1686 Badge of Vows 36
+1687 Badge of Vows 59
+1688 Badge of Vows 57
+1689 Badge of Vows 24
+1690 Badge of Vows 18
+1692 Badge of Vows 26
+1693 Badge of Vows 53
+1694 Badge of Vows 99
+1695 Badge of Vows 90
+1696 Badge of Vows 10
+1697 Badge of Vows 76
+1698 Badge of Vows 78
+1699 Badge of Vows 91
+1700 Badge of Vows 101
+2411 Badge of Vows 25
