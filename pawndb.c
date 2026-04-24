@@ -653,23 +653,105 @@ static void load_ini(const char *path)
      * is silent because load_ini runs before g_log is set. */
 }
 
-/* Resolve g_remote_dir / g_leader_dir from %APPDATA%\GSE Saves\367500\{remote,leaderboard}.
- * SHGetFolderPathA returns the Windows-style Roaming AppData path on both native
- * Windows (C:\Users\<you>\AppData\Roaming) and Proton/Wine (C:\users\steamuser\
- * AppData\Roaming inside the prefix). Returns 1 on success, 0 on failure — in
- * which case the globals stay empty and every gbe_fork-path fopen will miss. */
+/* Resolve g_remote_dir / g_leader_dir, mirroring gbe_fork's own save-root
+ * resolution (see gbe_fork-dev/dll/settings_parser.cpp:parse_local_save).
+ * Priority:
+ *   1. GseSavePath env var           -> used verbatim as the save root
+ *   2. configs.user.ini [user::saves]:
+ *        local_save_path              -> relative to the game exe, used as root
+ *        saves_folder_name            -> replaces "GSE Saves" under %APPDATA%
+ *   3. %APPDATA%\GSE Saves            -> default
+ * Then the app-id subdir and the leaf (remote/leaderboard) are appended.
+ * SHGetFolderPathA returns the same physical location under Windows and
+ * Proton/Wine, so one codepath serves both. */
+
+/* Read one [user::saves] string key from steam_settings/configs.user.ini next to
+ * the game exe. Returns 1 if found (copied into out, NUL-terminated), 0 otherwise.
+ * Minimal section-aware parser — skips comments and trims whitespace. */
+static int read_user_saves_key(const char *game_dir, const char *key, char *out, size_t out_sz)
+{
+    char path[MAX_PATH];
+    _snprintf(path, sizeof(path), "%ssteam_settings\\configs.user.ini", game_dir);
+    FILE *f = fopen(path, "r");
+    if (!f) return 0;
+    char line[512];
+    int in_section = 0;
+    int found = 0;
+    while (fgets(line, sizeof(line), f)) {
+        char *p = trim(line);
+        if (!*p) continue;
+        if (*p == '[') {
+            in_section = (strncmp(p, "[user::saves]", 13) == 0);
+            continue;
+        }
+        if (!in_section) continue;
+        char *eq = strchr(p, '=');
+        if (!eq) continue;
+        *eq = 0;
+        char *k = trim(p);
+        char *v = trim(eq + 1);
+        if (strcmp(k, key) == 0 && *v) {
+            strncpy(out, v, out_sz - 1);
+            out[out_sz - 1] = 0;
+            found = 1;
+            break;
+        }
+    }
+    fclose(f);
+    return found;
+}
+
+/* Compute the directory holding DDDA.exe (with trailing backslash). */
+static void get_game_dir(char *out, size_t out_sz)
+{
+    DWORD n = GetModuleFileNameA(NULL, out, out_sz);
+    if (n == 0 || n >= out_sz) { out[0] = 0; return; }
+    char *slash = strrchr(out, '\\');
+    if (slash) *(slash + 1) = 0;
+    else out[0] = 0;
+}
+
 static int resolve_gse_paths(void)
 {
-    char appdata[MAX_PATH];
-    HRESULT hr = SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, appdata);
-    if (hr != S_OK) {
-        log_line("resolve_gse_paths: SHGetFolderPathA failed hr=0x%08lx", (unsigned long)hr);
-        return 0;
+    char save_root[MAX_PATH] = {0};
+    char game_dir[MAX_PATH] = {0};
+    get_game_dir(game_dir, sizeof(game_dir));
+
+    /* 1. GseSavePath env var */
+    DWORD env_len = GetEnvironmentVariableA("GseSavePath", save_root, sizeof(save_root));
+    if (env_len > 0 && env_len < sizeof(save_root)) {
+        log_line("resolve_gse_paths: using GseSavePath env='%s'", save_root);
+    } else {
+        save_root[0] = 0;
+
+        /* 2a. configs.user.ini local_save_path (relative to game exe) */
+        char ini_val[MAX_PATH];
+        if (*game_dir && read_user_saves_key(game_dir, "local_save_path", ini_val, sizeof(ini_val))) {
+            _snprintf(save_root, sizeof(save_root), "%s%s", game_dir, ini_val);
+            log_line("resolve_gse_paths: using configs.user.ini local_save_path -> '%s'", save_root);
+        } else {
+            /* 3. %APPDATA%\<folder_name> where folder_name defaults to "GSE Saves" */
+            char appdata[MAX_PATH];
+            HRESULT hr = SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+            if (hr != S_OK) {
+                log_line("resolve_gse_paths: SHGetFolderPathA failed hr=0x%08lx", (unsigned long)hr);
+                return 0;
+            }
+            char folder_name[128] = "GSE Saves";
+            if (*game_dir) {
+                char override_name[128];
+                if (read_user_saves_key(game_dir, "saves_folder_name", override_name, sizeof(override_name))) {
+                    strncpy(folder_name, override_name, sizeof(folder_name) - 1);
+                    folder_name[sizeof(folder_name) - 1] = 0;
+                    log_line("resolve_gse_paths: using configs.user.ini saves_folder_name='%s'", folder_name);
+                }
+            }
+            _snprintf(save_root, sizeof(save_root), "%s\\%s", appdata, folder_name);
+        }
     }
-    _snprintf(g_remote_dir, sizeof(g_remote_dir),
-              "%s\\GSE Saves\\367500\\remote", appdata);
-    _snprintf(g_leader_dir, sizeof(g_leader_dir),
-              "%s\\GSE Saves\\367500\\leaderboard", appdata);
+
+    _snprintf(g_remote_dir, sizeof(g_remote_dir), "%s\\367500\\remote",      save_root);
+    _snprintf(g_leader_dir, sizeof(g_leader_dir), "%s\\367500\\leaderboard", save_root);
     return 1;
 }
 
