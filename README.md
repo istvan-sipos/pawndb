@@ -66,6 +66,10 @@ make            # produces pawndb.dll
 
 ## Install
 
+For a **binary release** (no build toolchain), follow [INSTALL.md](INSTALL.md).
+
+From source:
+
 ```sh
 make install
 ```
