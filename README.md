@@ -1,8 +1,8 @@
 # pawndb
 
 Local pawn-rift emulator for **Dragon's Dogma: Dark Arisen** (Steam, on Linux
-via Proton). This shim keeps the in-game rift functional against a folder of
-archived pawn snapshots on disk.
+via Proton, probably works on windows too). This shim keeps the in-game rift
+functional against a folder of archived pawn snapshots on disk.
 
 ## What it does
 

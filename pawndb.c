@@ -92,6 +92,7 @@
  */
 
 #include <windows.h>
+#include <shlobj.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -346,11 +347,13 @@ static enum log_mode g_log_mode = LOG_TRUNCATE;                 /* pawndb.log ha
  * these archives in leader_231/232. */
 static uint64_t g_session_start_ft = 0;
 
-/* Remote-storage directory - where gbe_fork keeps the user's pawn blob files ('0', '1') and DDDA.sav.
- * Parallel to LEADERBOARD_DIR's parent. */
-#define REMOTE_DIR \
-    "Z:\\home\\istvan\\.local\\share\\Steam\\steamapps\\compatdata\\367500\\pfx\\drive_c" \
-    "\\users\\steamuser\\AppData\\Roaming\\GSE Saves\\367500\\remote"
+/* gbe_fork stores per-app save data under %APPDATA%\GSE Saves\367500\{remote,leaderboard}.
+ * Resolved at DllMain via SHGetFolderPathA(CSIDL_APPDATA) so pawndb runs anywhere the
+ * game does (Windows-native and Proton/Wine both: Wine maps CSIDL_APPDATA to
+ * <prefix>\drive_c\users\steamuser\AppData\Roaming, which is the same bytes the old
+ * hardcoded Z:\home\... path resolved to). */
+static char g_remote_dir[MAX_PATH] = {0};
+static char g_leader_dir[MAX_PATH] = {0};
 
 /* ============================================================================
  * Hook implementations (ISteamRemoteStorage - data plane)
@@ -556,7 +559,9 @@ static int32 __thiscall hook_UGCRead(void *self, UGCHandle_t h, void *pvData,
      * One-shot - cleared after serving. */
     if (g_pending_fake_idx >= 0 && g_pending_fake_idx < g_fake_count) {
         const struct FakePawn *fp = &g_fakes[g_pending_fake_idx];
-        const char *src = g_pending_is_preview ? (REMOTE_DIR "\\1") : fp->pawn_path;
+        char preview_path[MAX_PATH];
+        _snprintf(preview_path, sizeof(preview_path), "%s\\1", g_remote_dir);
+        const char *src = g_pending_is_preview ? preview_path : fp->pawn_path;
         FILE *f = fopen(src, "rb");
         if (!f) {
             log_line("UGCRead: pending fake #%d, but fopen('%s') failed (errno=%d); falling through",
@@ -579,10 +584,9 @@ static int32 __thiscall hook_UGCRead(void *self, UGCHandle_t h, void *pvData,
     return r;
 }
 
-/* Path on the Windows side (as seen by the Proton-wrapped game). Z: = wine root. */
-#define LEADERBOARD_DIR \
-    "Z:\\home\\istvan\\.local\\share\\Steam\\steamapps\\compatdata\\367500\\pfx\\drive_c" \
-    "\\users\\steamuser\\AppData\\Roaming\\GSE Saves\\367500\\leaderboard"
+/* LEADERBOARD_DIR and REMOTE_DIR were compile-time string macros keyed to
+ * my Proton prefix. They are now resolved at DllMain into g_leader_dir /
+ * g_remote_dir. See resolve_gse_paths() below. */
 
 /* ============================================================================
  * Configuration (pawndb.ini) and archive write path
@@ -647,6 +651,26 @@ static void load_ini(const char *path)
     fclose(f);
     /* Summary is logged by DllMain after opening the log file - log_line here
      * is silent because load_ini runs before g_log is set. */
+}
+
+/* Resolve g_remote_dir / g_leader_dir from %APPDATA%\GSE Saves\367500\{remote,leaderboard}.
+ * SHGetFolderPathA returns the Windows-style Roaming AppData path on both native
+ * Windows (C:\Users\<you>\AppData\Roaming) and Proton/Wine (C:\users\steamuser\
+ * AppData\Roaming inside the prefix). Returns 1 on success, 0 on failure — in
+ * which case the globals stay empty and every gbe_fork-path fopen will miss. */
+static int resolve_gse_paths(void)
+{
+    char appdata[MAX_PATH];
+    HRESULT hr = SHGetFolderPathA(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+    if (hr != S_OK) {
+        log_line("resolve_gse_paths: SHGetFolderPathA failed hr=0x%08lx", (unsigned long)hr);
+        return 0;
+    }
+    _snprintf(g_remote_dir, sizeof(g_remote_dir),
+              "%s\\GSE Saves\\367500\\remote", appdata);
+    _snprintf(g_leader_dir, sizeof(g_leader_dir),
+              "%s\\GSE Saves\\367500\\leaderboard", appdata);
+    return 1;
 }
 
 /* Copy a file by reading all of it into memory then writing out. Returns bytes copied, or -1 on error. */
@@ -1210,7 +1234,9 @@ static void archive_rest(const int32 *fresh_details)
     char dst[MAX_PATH];
     _snprintf(dst, sizeof(dst), "%s\\%s.pawn", dir, stem_hex);
 
-    long n = copy_file(REMOTE_DIR "\\0", dst);
+    char src0[MAX_PATH];
+    _snprintf(src0, sizeof(src0), "%s\\0", g_remote_dir);
+    long n = copy_file(src0, dst);
     if (n <= 0) {
         log_line("archive_rest: copy_file failed for '%s' (errno=%d)", dst, errno);
         return;
@@ -1246,7 +1272,7 @@ static void archive_rest(const int32 *fresh_details)
 static int load_template_details(const char *leader_name, int32 out[18])
 {
     char full[MAX_PATH];
-    _snprintf(full, sizeof(full), LEADERBOARD_DIR "\\%s", leader_name);
+    _snprintf(full, sizeof(full), "%s\\%s", g_leader_dir, leader_name);
     FILE *f = fopen(full, "rb");
     if (!f) return 0;
     uint32 header[4];
@@ -1264,7 +1290,7 @@ static CSteamID read_self_id_from_disk(void)
     const char *candidates[] = { "leader_227", "leader_228", "leader_101", "leader_2", "leader_231", NULL };
     for (int i = 0; candidates[i]; i++) {
         char full[MAX_PATH];
-        _snprintf(full, sizeof(full), LEADERBOARD_DIR "\\%s", candidates[i]);
+        _snprintf(full, sizeof(full), "%s\\%s", g_leader_dir, candidates[i]);
         FILE *f = fopen(full, "rb");
         if (!f) continue;
         uint32 lo = 0, hi = 0;
@@ -1495,7 +1521,7 @@ static size_t filter_real_entries(const unsigned char *in, size_t in_len,
 static void write_ugc_board(const char *board_name, int use_preview_handle)
 {
     char path[MAX_PATH];
-    _snprintf(path, sizeof(path), LEADERBOARD_DIR "\\%s", board_name);
+    _snprintf(path, sizeof(path), "%s\\%s", g_leader_dir, board_name);
 
     unsigned char raw[4096], kept[4096];
     size_t raw_len = 0, kept_len = 0;
@@ -1542,7 +1568,7 @@ static void write_ugc_board(const char *board_name, int use_preview_handle)
 static void write_search_board(const char *board_name, int level)
 {
     char path[MAX_PATH];
-    _snprintf(path, sizeof(path), LEADERBOARD_DIR "\\%s", board_name);
+    _snprintf(path, sizeof(path), "%s\\%s", g_leader_dir, board_name);
 
     FILE *f = fopen(path, "wb");
     if (!f) {
@@ -1604,7 +1630,7 @@ static UGCHandle_t acquire_fresh_ugc_via_fileshare(void)
      * if it happens to be in flux. Create it if missing so FileShare can always succeed. */
     const char *anchor = "pawndb_anchor";
     char anchor_path[MAX_PATH];
-    _snprintf(anchor_path, sizeof(anchor_path), REMOTE_DIR "\\%s", anchor);
+    _snprintf(anchor_path, sizeof(anchor_path), "%s\\%s", g_remote_dir, anchor);
     FILE *fcheck = fopen(anchor_path, "rb");
     if (!fcheck) {
         FILE *fnew = fopen(anchor_path, "wb");
@@ -2202,6 +2228,11 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
         _snprintf(ini_path, sizeof(ini_path), "%spawndb.ini", g_dll_dir);
         load_ini(ini_path);
 
+        /* Resolve gbe_fork's per-app save paths from %APPDATA%.  Same physical
+         * location under Windows and Proton/Wine; no hardcoded usernames or
+         * prefix layouts. */
+        resolve_gse_paths();
+
         /* Log file lives next to the game EXE (matches STEAM_LOG's location).
          * logging=disabled -> skip fopen entirely; logging=truncate -> "w" (fresh
          * per session); logging=append -> "a" (history preserved). */
@@ -2220,7 +2251,9 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
             if (g_log) {
                 setvbuf(g_log, NULL, _IONBF, 0);
                 log_line("=== pawndb loaded, log at '%s' (mode=%s) ===", logpath, mode);
-                log_line("dll_dir = '%s'", g_dll_dir);
+                log_line("dll_dir    = '%s'", g_dll_dir);
+                log_line("remote_dir = '%s'", g_remote_dir);
+                log_line("leader_dir = '%s'", g_leader_dir);
                 log_line("config: save_dir='%s' max_search_results=%d logging=%d enable_exports=%d enable_updates=%d",
                          g_save_dir_rel, g_max_search_results, (int)g_log_mode,
                          g_enable_exports, g_enable_updates);

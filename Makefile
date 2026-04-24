@@ -28,7 +28,7 @@ DEPLOY   := $(LOAD_DIR)/$(TARGET)
 all: deploy
 
 $(TARGET): $(SRC) $(XFS_SRC) $(SAVE_SRC) $(ZLIB_SRC) pawnxfs.h pawnsave.h
-	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC) $(XFS_SRC) $(SAVE_SRC) $(ZLIB_SRC) -luser32 -lkernel32
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(SRC) $(XFS_SRC) $(SAVE_SRC) $(ZLIB_SRC) -luser32 -lkernel32 -lshell32 -lole32
 
 # Copy into gbe_fork's load_dlls and verify the hashes match. If the game is
 # running, Wine has the DLL mapped and the cp will fail with a clear error —
