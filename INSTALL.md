@@ -42,8 +42,8 @@ Back up the original first if you want an easy rollback.
 
 ## 3. Drop in pawndb
 
-From the pawndb release archive, copy both files into gbe_fork's auto-load
-directory:
+From the pawndb release archive, copy `pawndb.dll` and `pawndb.ini` into
+gbe_fork's auto-load directory:
 
 ```
 .../DDDA/steam_settings/load_dlls/pawndb.dll
@@ -57,14 +57,20 @@ Edit `pawndb.ini` if you want to change the archive root, rift result cap,
 logging mode, or the `enable_exports` / `enable_updates` toggles. Defaults
 are fine for a first run.
 
+The release archive also contains `tools/restore_pawn.exe` — a separate
+CLI for promoting an archived pawn into your save's main-pawn slot.
+Place it wherever you like (it doesn't have to live next to the DLL);
+see `RESTORE_PAWN.md` for usage.
+
 ## 4. Verify
 
 Launch DDDA. On a successful load you should see:
 
-- `pawndb.log` next to `DDDA.exe`, starting with a `=== pawndb loaded ===`
-  banner and a `config:` summary line.
-- After the first inn rest: a new `pawndb/<level>/<HEX>.pawn` (plus `.meta`
-  and `.json`) under `steam_settings/load_dlls/`.
+- `pawndb.log` next to `DDDA.exe`, starting with a
+  `=== pawndb <version> loaded, log at '...' (mode=...) ===` banner and
+  a `config:` summary line.
+- After the first inn rest: a new `pawndb/<level>/<HEX>.pawn` (plus
+  `.meta`, `.json`, and `.xml`) under `steam_settings/load_dlls/`.
 - In the rift search board for your pawn's level: archived pawns from
   previous sessions appear as hirable entries.
 

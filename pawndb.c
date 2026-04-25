@@ -104,6 +104,15 @@
 #include "pawnxfs.h"
 #include "pawnsave.h"
 
+/* Stamped onto the startup banner. Defined via -DPAWNDB_VERSION="<v>" at
+ * compile time (see Makefile, sourced from VERSION file). The "dev"
+ * fallback only kicks in when someone builds outside the Makefile — which
+ * means the user is hand-compiling and almost certainly debugging, so the
+ * non-version label is correct. */
+#ifndef PAWNDB_VERSION
+#define PAWNDB_VERSION "dev"
+#endif
+
 typedef uint64_t SteamAPICall_t;
 typedef uint64_t UGCHandle_t;
 typedef uint64_t SteamLeaderboard_t;
@@ -355,6 +364,12 @@ static uint64_t g_session_start_ft = 0;
 static char g_remote_dir[MAX_PATH] = {0};
 static char g_leader_dir[MAX_PATH] = {0};
 
+/* Stem of the archive most recently written by archive_rest, format
+ * "NNN:HHHHHHHH". Empty until the first inn-rest archive of the session.
+ * Read by hook_FileWrite to know which <save_dir>/<NNN>/<HEX>.xml the
+ * current main-pawn snapshot belongs to (Path B / restore_pawn). */
+static char g_last_archive_stem_full[16] = {0};
+
 /* ============================================================================
  * Hook implementations (ISteamRemoteStorage - data plane)
  * ============================================================================ */
@@ -400,6 +415,51 @@ static int parse_arisen_stem(const char *s, int *out_level, char *out_stem, size
     memcpy(out_stem, s + 4, 8);
     out_stem[8] = 0;
     return 1;
+}
+
+/* Write a verbatim cSAVE_DATA_CMC XML region to <save_dir>/<NNN>/<HEX>.xml.
+ * `stem_full` is the "NNN:HHHHHHHH" string used by archive_rest. The .pawn
+ * sibling is expected to already exist — we don't create it. The sidecar is
+ * Path B's storage format: restore_pawn reads it and splices the bytes back
+ * into a target save's main-pawn slot, recovering full pawn state (vocation,
+ * skills, augments, inclinations) that the .pawn archive itself doesn't
+ * persist. The bytes are a single well-formed XML element rooted at
+ * <class type="cSAVE_DATA_CMC">, so the .xml extension is honest — any XML
+ * tool will parse it. Returns 0 on success, -1 on parse / IO failure
+ * (logged). */
+static int write_pawn_xml_sidecar(const char *stem_full,
+                                  const uint8_t *xml, size_t xml_len,
+                                  const char *origin_label)
+{
+    int level = 0;
+    char stem[16] = {0};
+    if (!parse_arisen_stem(stem_full, &level, stem, sizeof(stem))) {
+        log_line("pawnxml: %s — stem '%s' not parseable, skipping sidecar",
+                 origin_label, stem_full ? stem_full : "(null)");
+        return -1;
+    }
+
+    char path[MAX_PATH];
+    _snprintf(path, sizeof(path), "%s%s\\%03d\\%s.xml",
+              g_dll_dir, g_save_dir_rel, level, stem);
+    for (char *q = path; *q; q++) if (*q == '/') *q = '\\';
+
+    FILE *f = fopen(path, "wb");
+    if (!f) {
+        log_line("pawnxml: %s — fopen('%s', wb) failed (errno=%d)",
+                 origin_label, path, errno);
+        return -1;
+    }
+    size_t w = fwrite(xml, 1, xml_len, f);
+    fclose(f);
+    if (w != xml_len) {
+        log_line("pawnxml: %s — short write (%u of %u) to '%s'",
+                 origin_label, (unsigned)w, (unsigned)xml_len, path);
+        return -1;
+    }
+    log_line("pawnxml: %s — wrote %u bytes to '%s'",
+             origin_label, (unsigned)xml_len, path);
+    return 0;
 }
 
 /* Patch the source archive with the 12 equipment records and the two
@@ -486,6 +546,17 @@ static void writeback_to_archive(int slot, const struct pawnsave_hired_info *inf
     for (int i = 0; i < WB_STUDY_COUNT; i++) if (info->study_flag[i] || info->local_study_flag[i]) known++;
     log_line("writeback: slot %d (%03d:%s) gear=%d study=%d -> '%s'",
              slot, level, stem, equipped, known, pawn_path);
+
+    /* Snapshot the hired pawn's full XML region (vocation, skills, augments,
+     * inclinations — everything the .pawn archive doesn't capture) into an
+     * .xml sidecar next to the source archive. restore_pawn later splices
+     * these bytes back into a target save's main-pawn slot. */
+    if (info->region_xml && info->region_xml_len > 0) {
+        char origin[64];
+        _snprintf(origin, sizeof(origin), "writeback slot %d", slot);
+        write_pawn_xml_sidecar(info->creator_name, info->region_xml,
+                               info->region_xml_len, origin);
+    }
 }
 
 static bool __thiscall hook_FileWrite(void *self, const char *pchFile,
@@ -506,7 +577,36 @@ static bool __thiscall hook_FileWrite(void *self, const char *pchFile,
             if (rc != 0) {
                 log_line("writeback: pawnsave_read_hired rc=%d — skipping both slots", rc);
             } else {
-                for (int s = 0; s < 2; s++) writeback_to_archive(s, &info[s]);
+                for (int s = 0; s < 2; s++) {
+                    writeback_to_archive(s, &info[s]);
+                    if (info[s].region_xml) {
+                        free(info[s].region_xml);
+                        info[s].region_xml = NULL;
+                        info[s].region_xml_len = 0;
+                    }
+                }
+            }
+        }
+
+        /* Path B: drop an .xml sidecar for the player's main pawn next to
+         * the archive that archive_rest just created (or the most recent one
+         * this session). The .xml bytes are the live mCmc[0] block from
+         * this very save — restore_pawn splices them back into a future save
+         * to swap that archived pawn into the main-pawn slot. Skipped when
+         * no archive has been written yet (g_last_archive_stem_full empty).
+         * Independent of enable_updates because this is about the player's
+         * own archive, not hired-pawn writeback. */
+        if (g_enable_exports && g_last_archive_stem_full[0]) {
+            uint8_t *mp_xml = NULL;
+            size_t   mp_len = 0;
+            int erc = pawnsave_extract_main_pawn_xml(pvData, cubData,
+                                                     &mp_xml, &mp_len);
+            if (erc == 0) {
+                write_pawn_xml_sidecar(g_last_archive_stem_full,
+                                       mp_xml, mp_len, "main-pawn snapshot");
+                free(mp_xml);
+            } else {
+                log_line("pawnxml: main-pawn extract rc=%d — no sidecar written", erc);
             }
         }
     }
@@ -1347,6 +1447,12 @@ static void archive_rest(const int32 *fresh_details)
     } else {
         log_line("archive_rest: stamped mArisenName='%s' into '%s'", stem_full, dst);
     }
+
+    /* Remember this stem so the imminent FileWrite('DDDA.sav') can drop a
+     * matching <stem>.xml sidecar next to the archive — the live main
+     * pawn's cSAVE_DATA_CMC region snapshot, used by restore_pawn. */
+    strncpy(g_last_archive_stem_full, stem_full, sizeof(g_last_archive_stem_full) - 1);
+    g_last_archive_stem_full[sizeof(g_last_archive_stem_full) - 1] = 0;
 }
 
 /* Read the 18-int32 details from a local leader_N file (entry 0 only).
@@ -2332,7 +2438,7 @@ BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved)
             g_log = fopen(logpath, mode);
             if (g_log) {
                 setvbuf(g_log, NULL, _IONBF, 0);
-                log_line("=== pawndb loaded, log at '%s' (mode=%s) ===", logpath, mode);
+                log_line("=== pawndb " PAWNDB_VERSION " loaded, log at '%s' (mode=%s) ===", logpath, mode);
                 log_line("dll_dir    = '%s'", g_dll_dir);
                 log_line("remote_dir = '%s'", g_remote_dir);
                 log_line("leader_dir = '%s'", g_leader_dir);

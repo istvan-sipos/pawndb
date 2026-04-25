@@ -394,8 +394,129 @@ static int cmc_cb(xspan body, int idx, void *ctxp)
     xml_get_u32_array(body, "mStudyFlag",      c->out[slot].study_flag,       322);
     xml_get_u32_array(body, "mLocalStudyFlag", c->out[slot].local_study_flag, 322);
 
+    /* Heap-copy the full <class type="cSAVE_DATA_CMC">…</class> bytes for
+     * the .xml sidecar. xml_for_each_class hands us the body span (between
+     * the opening `>` of the type tag and the `<` of </class>); the outer
+     * element extends by len("<class type=\"cSAVE_DATA_CMC\">") before
+     * body.p and len("</class>") after body.end. Caller frees region_xml
+     * with free(). */
+    {
+        static const char CMC_OPEN_TAG[] = "<class type=\"cSAVE_DATA_CMC\">";
+        static const char CMC_CLOSE_TAG[] = "</class>";
+        const char *outer_start = body.p - (sizeof(CMC_OPEN_TAG) - 1);
+        const char *outer_end   = body.end + (sizeof(CMC_CLOSE_TAG) - 1);
+        size_t outer_len = (size_t)(outer_end - outer_start);
+        uint8_t *region = (uint8_t *)malloc(outer_len);
+        if (region) {
+            memcpy(region, outer_start, outer_len);
+            c->out[slot].region_xml = region;
+            c->out[slot].region_xml_len = outer_len;
+        }
+    }
+
     /* Stop once both slots have been filled. */
     return (c->out[0].present && c->out[1].present) ? 1 : 0;
+}
+
+/* ===========================================================================
+ * Main-pawn region locator (Path B sidecar / restore_pawn).
+ *
+ * The first <array name="mCmc" type="class" count="3"> in the inflated save
+ * holds three pawn slots; index 0 is the player's main pawn. The bare
+ * <class type="cSAVE_DATA_CMC"> opener (no `name=` prefix) only appears
+ * inside mCmc arrays, so the find sequence is:
+ *   1. anchor on the first <array name="mCmc"...> opener,
+ *   2. take the first <class type="cSAVE_DATA_CMC"> after that anchor,
+ *   3. depth-walk to the matching </class>.
+ * The returned span starts at the `<` of the opener and ends just past the
+ * `>` of the close. ===========================================================
+ */
+int pawnsave_find_main_pawn_region(const uint8_t *xml, size_t xml_len,
+                                   size_t *out_off, size_t *out_len)
+{
+    if (!xml || !out_off || !out_len) return -1;
+
+    xspan whole = { (const char *)xml, (const char *)xml + xml_len };
+
+    const char *arr_open = xfind(whole, "<array name=\"mCmc\" type=\"class\" count=\"3\">");
+    if (!arr_open) return -1;
+    xspan after_arr = { arr_open, whole.end };
+
+    const char *cmc_tag = "<class type=\"cSAVE_DATA_CMC\">";
+    size_t cmc_tag_len = strlen(cmc_tag);
+    const char *cmc_open = xfind(after_arr, cmc_tag);
+    if (!cmc_open) return -1;
+
+    int depth = 1;
+    const char *q = cmc_open + cmc_tag_len;
+    const char *close = NULL;
+    while (q < whole.end) {
+        const char *lt = memchr(q, '<', (size_t)(whole.end - q));
+        if (!lt) break;
+        if ((size_t)(whole.end - lt) >= 8 && memcmp(lt, "</class>", 8) == 0) {
+            if (--depth == 0) { close = lt; break; }
+            q = lt + 8;
+        } else if ((size_t)(whole.end - lt) >= 12 &&
+                   memcmp(lt, "<class name=", 12) == 0) {
+            depth++;
+            q = lt + 12;
+        } else if ((size_t)(whole.end - lt) >= 12 &&
+                   memcmp(lt, "<class type=", 12) == 0) {
+            depth++;
+            q = lt + 12;
+        } else {
+            q = lt + 1;
+        }
+    }
+    if (!close) return -1;
+
+    size_t off = (size_t)((const uint8_t *)cmc_open - xml);
+    size_t end = (size_t)((const uint8_t *)close - xml) + 8;  /* len("</class>") */
+    *out_off = off;
+    *out_len = end - off;
+    return 0;
+}
+
+int pawnsave_extract_main_pawn_xml(const void *save_bytes, int32_t save_len,
+                                   uint8_t **out_xml, size_t *out_xml_len)
+{
+    if (!save_bytes || save_len < 32 || !out_xml || !out_xml_len) return -1;
+    *out_xml = NULL;
+    *out_xml_len = 0;
+
+    const uint8_t *b = save_bytes;
+    uint32_t real_size, comp_size;
+    memcpy(&real_size, b + 4, 4);
+    memcpy(&comp_size, b + 8, 4);
+    if (comp_size == 0 || comp_size > (uint32_t)(save_len - 32)) return -1;
+    if (real_size == 0 || real_size > 64u * 1024u * 1024u) return -1;
+
+    uint8_t *xml = (uint8_t *)malloc(real_size);
+    if (!xml) return -2;
+    unsigned long out_len = real_size;
+    int rc = uncompress(xml, &out_len, b + 32, comp_size);
+    if (rc != 0 || out_len != real_size) {
+        free(xml);
+        return -2;
+    }
+
+    size_t off = 0, len = 0;
+    if (pawnsave_find_main_pawn_region(xml, out_len, &off, &len) != 0) {
+        free(xml);
+        return -3;
+    }
+
+    uint8_t *region = (uint8_t *)malloc(len);
+    if (!region) {
+        free(xml);
+        return -2;
+    }
+    memcpy(region, xml + off, len);
+    free(xml);
+
+    *out_xml = region;
+    *out_xml_len = len;
+    return 0;
 }
 
 /* ===========================================================================

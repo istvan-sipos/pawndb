@@ -15,7 +15,7 @@ empty and the rift shows zero online pawns.
 This shim runs as a 32-bit Windows DLL loaded by
 [gbe_fork](https://github.com/Detanup01/gbe_fork) (a Steam API emulator) and:
 
-1. **Archives** the player's own main pawn into `pawndb/<NNN>/<HEX>.{pawn,meta,json}`
+1. **Archives** the player's own main pawn into `pawndb/<NNN>/<HEX>.{pawn,meta,json,xml}`
    on every inn rest (`<NNN>` = pawn's live level zero-padded to 3 digits,
    `<HEX>` = 8-char hex epoch-offset from 2026-01-01 UTC). The archive's
    `mArisenName` cName is also stamped with `"NNN:HEX"` so the blob self-
@@ -33,13 +33,18 @@ This shim runs as a 32-bit Windows DLL loaded by
 
 Archives from previous sessions are fully browsable and summonable in the
 rift. Archives written *in the current session* are intentionally hidden
-from the rift until the next game launch (the game's caches the leaderboard
+from the rift until the next game launch (the game caches the leaderboard
 results).
 
-The `.json` sidecar contains a human-readable summary of each archived
-pawn (level, vocation, stats, vocation ranks, inclinations, equipped
-skills with resolved names) so you can browse the archive folder
-meaningfully from the shell.
+Sidecars next to each `.pawn`:
+
+- `.json` — human-readable summary (level, vocation, stats, vocation
+  ranks, inclinations, equipped skills with resolved names) for browsing
+  the archive folder from the shell.
+- `.xml` — verbatim copy of the pawn's `<class type="cSAVE_DATA_CMC">…
+  </class>` region from the save XML at the time of the most recent
+  archive write. Consumed by `tools/restore_pawn.exe` to splice the pawn
+  into a target save's main-pawn slot. See [RESTORE_PAWN.md](RESTORE_PAWN.md).
 
 ## Dependencies
 
@@ -108,6 +113,7 @@ DDDA/
           0090A8E8.pawn                 # 8 KB encoded pawn blob
           0090A8E8.meta                 # 18 int32s of leaderboard card data
           0090A8E8.json                 # human-readable descriptor
+          0090A8E8.xml                  # cSAVE_DATA_CMC region snapshot (for restore_pawn)
         021/
           ...
   pawndb.log                            # log file (next to DDDA.exe)
@@ -121,7 +127,8 @@ the updates.
 Folder names must be a zero-padded 3-digit level (`001`..`200`); anything
 else is ignored. Filename stems must be 8 hex digits. Each `.pawn` needs
 its matching `.meta` sibling to display correct card details in the rift;
-`.json` is purely for humans.
+`.json` is purely for humans; `.xml` is required by `restore_pawn` and
+optional otherwise.
 
 ## How it works (short version)
 
